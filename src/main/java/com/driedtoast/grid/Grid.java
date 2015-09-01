@@ -81,15 +81,15 @@ public class Grid {
 		removeObject(obj);
 		obj.setPosition(point);
 		if (setObject(obj, true)) {
-
 			// Move object and notify the listeners
 			GridEvent event = new GridEvent(obj, previousPosition, EventType.POSITION_CHANGE);
 			List<EventListener> objListeners = obj.listeners();
-			for (EventListener listener : objListeners) {
-				if (listener.type() != event.type()) {
-					continue;
+			if (objListeners != null) {
+				for (EventListener listener : objListeners) {
+					if (listener.type() != event.type())
+						continue;
+					listener.triggered(event);
 				}
-				listener.triggered(event);
 			}
 		}
 		// TODO figure out moving and viewport changes?
